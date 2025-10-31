@@ -10,7 +10,10 @@ import java.util.*;
 class LottoController{
     private static final String ERROR_MESSAGE = "[ERROR]";
     private Lotto lotto;
-    CostInput costInput = new CostInput();
+    private final CostInput costInput;
+    public LottoController() {
+        this.costInput = new CostInput();
+    }
     public void run(){
         Cost cost = costInput.inputCost();
 
