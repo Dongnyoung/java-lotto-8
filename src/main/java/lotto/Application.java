@@ -36,24 +36,54 @@ class LottoController{
         }
 
         List<Integer> winningNumbersList = new ArrayList<>();
-        System.out.println("당첨 번호를 입력해 주세요.");
-        //당첨번호 입력받기
-        String winningNumbers = Console.readLine();
+        while(true){
+            try{
+                winningNumbersList.clear();
+                System.out.println("당첨 번호를 입력해 주세요.");
+                //당첨번호 입력받기
+                String winningNumbers = Console.readLine();
 
 
-        //당첨번호 처리
-        String[] winningNumbersStrList = winningNumbers.split(",");
-        for(int i=0;i<winningNumbersStrList.length;i++){
-            winningNumbersList.add(Integer.parseInt(winningNumbersStrList[i]));
+                //당첨번호 처리
+                String[] winningNumbersStrList = winningNumbers.split(",");
+                for(int i=0;i<winningNumbersStrList.length;i++){
+                    winningNumbersList.add(Integer.parseInt(winningNumbersStrList[i]));
+                }
+
+                //로또번호
+                lotto = new Lotto(winningNumbersList);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+
         }
 
-        //로또번호
-        lotto = new Lotto(winningNumbersList);
+        int bonusNumber = 0;
+        while (true) {
+            try {
+                System.out.println("보너스 번호를 입력해 주세요.");
+                String bonusNumberStr = Console.readLine();
+                bonusNumber = Integer.parseInt(bonusNumberStr);
 
-        System.out.println("보너스 번호를 입력해 주세요.");
-        //보너스 번호 입력받기
-        String bonusNumberStr = Console.readLine();
-        int bonusNumber = Integer.parseInt(bonusNumberStr);
+                // 범위 체크
+                if (bonusNumber < 1 || bonusNumber > 45) {
+                    throw new IllegalArgumentException("[ERROR] 보너스 번호는 1~45 사이여야 합니다.");
+                }
+
+                // 당첨 번호 중복 체크
+                if (winningNumbersList.contains(bonusNumber)) {
+                    throw new IllegalArgumentException("[ERROR] 보너스 번호는 당첨 번호와 중복될 수 없습니다.");
+                }
+
+                break;
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+
 
         //당첨통계
         Map<String,Integer> winningMap = new HashMap<>();
