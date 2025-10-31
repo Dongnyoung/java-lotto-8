@@ -5,29 +5,24 @@ import camp.nextstep.edu.missionutils.Randoms;
 
 import java.util.*;
 
-public class Application {
-    private static Lotto lotto;
-
-    public static void main(String[] args) {
-        // TODO: 프로그램 구현
-        //구입 금액 입력받기
+class LottoController{
+    private static final String ERROR_MESSAGE = "[ERROR]";
+    private final int divider = 1000;
+    private Lotto lotto;
+    public void run(){
         System.out.println("구입금액을 입력해 주세요.");
-        String costStr = Console.readLine();
-        char[] costCheckCharList = costStr.toCharArray();
-        for(char c: costCheckCharList) {
-            if(!Character.isDigit(c)) {
-                throw new IllegalArgumentException("[ERROR] 숫자가 아닌 입력발생");
+        int cost = 0;
+        while (true) {
+            try {
+                String costStr = Console.readLine();
+                cost = parseCost(costStr); // 여기서 예외 터지면 catch로 감
+                if (cost % divider != 0) {
+                    throw new IllegalArgumentException("[ERROR] 1000원 단위여야 합니다.");
+                }
+                break; // 정상 입력이면 while 탈출
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
-        }
-
-        final int divider = 1000;
-
-        //구입 금액 정수형 변환
-        int cost = Integer.parseInt(costStr);
-
-        //1000원으로 나누어 떨어지는지 유효성검사
-        if(cost%divider!=0){
-            throw new IllegalArgumentException("[ERROR] 1000원으로 나누어 떨어지지 않음");
         }
 
         //발행한 로또 및 번호를 출력
@@ -120,5 +115,27 @@ public class Application {
         }
         float rate = (float) totalPrize / cost * 100;
         System.out.printf("총 수익률은 %,.1f%%입니다.%n", rate);
+    }
+    private int parseCost(String costStr) {
+        if (!costStr.matches("\\d+")) {
+            throw new IllegalArgumentException("[ERROR] 숫자만 입력 가능합니다.");
+        }
+        return Integer.parseInt(costStr);
+    }
+
+}
+
+public class Application {
+    private static Lotto lotto;
+
+    public static void main(String[] args) {
+        // TODO: 프로그램 구현
+        try{
+            new LottoController().run();
+        }
+        finally{
+            Console.close();//자원 정리
+        }
+
     }
 }
