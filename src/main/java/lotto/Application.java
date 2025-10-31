@@ -3,24 +3,16 @@ package lotto;
 import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
 import domain.Cost;
+import io.CostInput;
 
 import java.util.*;
 
 class LottoController{
     private static final String ERROR_MESSAGE = "[ERROR]";
     private Lotto lotto;
-    private Cost cost;
+    CostInput costInput = new CostInput();
     public void run(){
-        System.out.println("구입금액을 입력해 주세요.");
-        while (true) {
-            try {
-                String costStr = Console.readLine();
-                cost = new Cost(costStr);
-                break; // 정상 입력이면 while 탈출
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        Cost cost = costInput.inputCost();
 
         //발행한 로또 및 번호를 출력
         int lottoCountNumber = cost.getTicket();
