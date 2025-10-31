@@ -2,23 +2,20 @@ package lotto;
 
 import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
+import domain.Cost;
 
 import java.util.*;
 
 class LottoController{
     private static final String ERROR_MESSAGE = "[ERROR]";
-    private final int divider = 1000;
     private Lotto lotto;
+    private Cost cost;
     public void run(){
         System.out.println("구입금액을 입력해 주세요.");
-        int cost = 0;
         while (true) {
             try {
                 String costStr = Console.readLine();
-                cost = parseCost(costStr); // 여기서 예외 터지면 catch로 감
-                if (cost % divider != 0) {
-                    throw new IllegalArgumentException("[ERROR] 1000원 단위여야 합니다.");
-                }
+                cost = new Cost(costStr);
                 break; // 정상 입력이면 while 탈출
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
@@ -26,7 +23,7 @@ class LottoController{
         }
 
         //발행한 로또 및 번호를 출력
-        int lottoCountNumber = cost/divider;
+        int lottoCountNumber = cost.getTicket();
         System.out.println(lottoCountNumber+"개를 구매했습니다.");
 
         List<List<Integer>> userNumbers = new ArrayList<>();
@@ -143,7 +140,7 @@ class LottoController{
             System.out.println(r.description + r.count + "개");
             totalPrize +=r.prize *r.count;
         }
-        float rate = (float) totalPrize / cost * 100;
+        float rate = (float) totalPrize / cost.getAmount() * 100;
         System.out.printf("총 수익률은 %,.1f%%입니다.%n", rate);
     }
     private int parseCost(String costStr) {
