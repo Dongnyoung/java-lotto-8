@@ -3,6 +3,7 @@ package lotto;
 import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
 import domain.Cost;
+import domain.LottoTickets;
 import io.CostInput;
 
 import java.util.*;
@@ -18,14 +19,10 @@ class LottoController{
         Cost cost = costInput.inputCost();
 
         //발행한 로또 및 번호를 출력
-        int lottoCountNumber = cost.getTicket();
-        System.out.println(lottoCountNumber+"개를 구매했습니다.");
-
-        List<List<Integer>> userNumbers = new ArrayList<>();
-        for(int i=0;i<lottoCountNumber;i++){
-            userNumbers.add(Randoms.pickUniqueNumbersInRange(1,45,6));
-            System.out.println(userNumbers.get(i));
-        }
+        int ticketCount = cost.getTicket();
+        LottoTickets lottoTickets = new LottoTickets(ticketCount);
+        lottoTickets.printBanner();
+        List<List<Integer>> userNumbers = lottoTickets.getUserNumbers();
 
         List<Integer> winningNumbersList = new ArrayList<>();
         while(true){
