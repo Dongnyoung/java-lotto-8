@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LottoTickets {
-    private int ticketCount;
-    private final List<List<Integer>> userNumbers=new ArrayList<>();;
+    private final int ticketCount;
+    private final List<List<Integer>> userNumbers=new ArrayList<>();
     public LottoTickets(int ticketCount){
         this.ticketCount = ticketCount;
         issueTicket();

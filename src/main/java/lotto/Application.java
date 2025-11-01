@@ -135,18 +135,9 @@ class LottoController{
         float rate = (float) totalPrize / cost.getAmount() * 100;
         System.out.printf("총 수익률은 %,.1f%%입니다.%n", rate);
     }
-    private int parseCost(String costStr) {
-        if (!costStr.matches("\\d+")) {
-            throw new IllegalArgumentException("[ERROR] 숫자만 입력 가능합니다.");
-        }
-        return Integer.parseInt(costStr);
-    }
-
 }
 
 public class Application {
-    private static Lotto lotto;
-
     public static void main(String[] args) {
         // TODO: 프로그램 구현
         try{
