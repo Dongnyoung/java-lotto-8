@@ -10,7 +10,6 @@ public class LottoTickets {
     private final List<List<Integer>> userNumbers=new ArrayList<>();
     public LottoTickets(int ticketCount){
         this.ticketCount = ticketCount;
-        issueTicket();
     }
     public void printBanner(){
         System.out.println(ticketCount+"개를 구매했습니다.");
