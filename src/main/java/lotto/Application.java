@@ -1,10 +1,10 @@
 package lotto;
 
 import camp.nextstep.edu.missionutils.Console;
-import camp.nextstep.edu.missionutils.Randoms;
 import domain.Cost;
 import domain.LottoTickets;
 import domain.WinningMap;
+import io.BonusInput;
 import io.CostInput;
 import io.LottoInput;
 
@@ -31,29 +31,12 @@ class LottoController{
         Lotto lotto = lottoInput.inputLottoNumber();
         List<Integer> winningLottoNumbersList = lotto.getNumbers();
 
-        int bonusNumber = 0;
-        while (true) {
-            try {
-                System.out.println("보너스 번호를 입력해 주세요.");
-                String bonusNumberStr = Console.readLine();
-                bonusNumber = Integer.parseInt(bonusNumberStr);
+        //보너스 숫자 입력 , 입력값 넘겨주기
+        BonusInput bonus = new BonusInput();
+        BonusNumber bonusNum = bonus.bonusInput(winningLottoNumbersList);
 
-                // 범위 체크
-                if (bonusNumber < 1 || bonusNumber > 45) {
-                    throw new IllegalArgumentException("[ERROR] 보너스 번호는 1~45 사이여야 합니다.");
-                }
-
-                // 당첨 번호 중복 체크
-                if (winningLottoNumbersList.contains(bonusNumber)) {
-                    throw new IllegalArgumentException("[ERROR] 보너스 번호는 당첨 번호와 중복될 수 없습니다.");
-                }
-
-                break;
-
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        //보너스 숫자
+        int bonusNumber = bonusNum.getBonusNumber();
 
         //당첨 확인
         WinningMap winningMap = new WinningMap();
