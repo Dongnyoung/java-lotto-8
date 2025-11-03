@@ -3,6 +3,7 @@ package domain;
 import camp.nextstep.edu.missionutils.Randoms;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LottoTickets {
@@ -20,10 +21,15 @@ public class LottoTickets {
 
     public void issueTicket(){
         for(int i=0;i<ticketCount;i++){
-            userNumbers.add(Randoms.pickUniqueNumbersInRange(1,45,6));
+            List<Integer>numbers =Randoms.pickUniqueNumbersInRange(1,45,6);
+            sortingNumbers(numbers);
+            userNumbers.add(numbers);
         }
     }
     public List<List<Integer>> getUserNumbers(){
         return userNumbers;
+    }
+    public void sortingNumbers(List<Integer> userNumbers) {
+        Collections.sort(userNumbers);
     }
 }
