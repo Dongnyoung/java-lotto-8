@@ -7,6 +7,8 @@ import domain.WinningMap;
 import io.BonusInput;
 import io.CostInput;
 import io.LottoInput;
+import io.ResultOutput;
+import service.LottoResultMapper;
 
 import java.util.*;
 
@@ -43,26 +45,14 @@ class LottoController{
         winningMap.evaluate(winningLottoNumbersList, userNumbers, bonusNumber);
 
         //당첨 통계
-        List<LottoResult> results = new ArrayList<>();
-        List<WinningMap.PrizeRank> prizeRanks = winningMap.getPrizeRanks();
-        for (WinningMap.PrizeRank rank : prizeRanks) {
-            results.add(new LottoResult(
-                    rank.getDescription(),
-                    rank.getPrize(),
-                    winningMap.getCount(rank)
-            ));
-        }
+        LottoResultMapper lottoResultMapper = new LottoResultMapper();
+        List<LottoResult> results = lottoResultMapper.getLottoResults(winningMap);
 
-        System.out.println("당첨통계");
-        System.out.println("---");
-        int totalPrize = 0;
-        for (LottoResult r : results) {
-            System.out.println(r.description + r.count + "개");
-            totalPrize += r.prize * r.count;
-        }
-        float rate = (float) totalPrize / cost.getAmount() * 100;
-        System.out.printf("총 수익률은 %,.1f%%입니다.%n", rate);
+        //통계 출력
+        ResultOutput resultOutput = new ResultOutput();
+        resultOutput.printResult(results, cost);
     }
+
 }
 
 public class Application {
