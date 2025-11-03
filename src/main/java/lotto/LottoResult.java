@@ -1,13 +1,22 @@
 package lotto;
 
 public class LottoResult {
-    String description;
-    int prize;
-    int count;
+    private String description;
+    private int prize;
+    private int count;
 
-    LottoResult(String description, int prize, int count) {
+    public LottoResult(String description, int prize, int count) {
         this.description = description;
         this.prize = prize;
         this.count = count;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public int getPrize() {
+        return prize;
+    }
+    public int getCount() {
+        return count;
     }
 }
