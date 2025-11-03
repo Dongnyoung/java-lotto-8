@@ -19,17 +19,17 @@ public class LottoTickets {
         }
     }
 
-    public void issueTicket(){
-        for(int i=0;i<ticketCount;i++){
-            List<Integer>numbers =Randoms.pickUniqueNumbersInRange(1,45,6);
-            sortingNumbers(numbers);
+    public void issueTicket() {
+        for (int i = 0; i < ticketCount; i++) {
+            List<Integer> numbers = new ArrayList<>(
+                    Randoms.pickUniqueNumbersInRange(1, 45, 6) // 불변 → 가변으로 복사
+            );
+            Collections.sort(numbers);
             userNumbers.add(numbers);
         }
     }
+
     public List<List<Integer>> getUserNumbers(){
         return userNumbers;
-    }
-    public void sortingNumbers(List<Integer> userNumbers) {
-        Collections.sort(userNumbers);
     }
 }
